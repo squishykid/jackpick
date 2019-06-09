@@ -20,10 +20,25 @@ CARD_SCHEMA = vol.Schema({
     vol.Required('displayName'): str,
     vol.Required('cardBalanceInDollars'): MATCH_DOLLARS,
     vol.Required('currentCardBalanceInDollars'): MATCH_DOLLARS,
-    vol.Required('svPendingInDollars'): vol.Any(None, MATCH_DOLLARS) 
-}, extra=vol.REMOVE_EXTRA)
+    vol.Required('svPendingInDollars'): vol.Any(None, MATCH_DOLLARS),
+    vol.Required('displayCardNumber'): vol.Any(None, str),
+    vol.Required('fareCategoryCode'): vol.Any(None, str),
+    vol.Required('fareCategoryTitle'): vol.Any(None, str),
+})
 
 CARDS_SCHEMA = vol.Schema([CARD_SCHEMA])
+
+TRIP_SCHEMA = vol.Schema({
+    vol.Required('tx_id'): int,
+    vol.Required('date'): datetime,
+    vol.Required('mode'): vol.Any(None, str),
+    vol.Required('details'): vol.Any(None, str),
+    vol.Required('journey_number'): vol.Any(None, int),
+    vol.Required('fare_applied'): vol.Any(None, str),
+    vol.Required('fare'): vol.Any(None, MATCH_DOLLARS),
+    vol.Required('discount'): vol.Any(None, MATCH_DOLLARS),
+    vol.Required('amount'): MATCH_DOLLARS
+})
 
 class Opal():
     def __init__(self, email, password):
